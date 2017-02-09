@@ -1,4 +1,4 @@
-﻿namespace VivaSpotippos.Model
+﻿namespace VivaSpotippos.Model.RestEntities
 {
     public interface IPropertyData
     {

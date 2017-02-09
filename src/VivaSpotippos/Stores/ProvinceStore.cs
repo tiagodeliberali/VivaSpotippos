@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VivaSpotippos.Model.Entities;
 
@@ -21,7 +20,7 @@ namespace VivaSpotippos.Stores
 
         private void LoadProvinces()
         {
-            var provincesData = File.ReadAllText("Data/provinces.json");
+            string provincesData = LoadProvinceData();
 
             provinces = new List<Province>();
 
@@ -34,6 +33,15 @@ namespace VivaSpotippos.Stores
 
                 provinces.Add(newProvince);
             }
+        }
+
+        /// <summary>
+        /// This method can be replaced by versions that load fresh data from web or database
+        /// </summary>
+        /// <returns>A string representing the provinces json data</returns>
+        private static string LoadProvinceData()
+        {
+            return File.ReadAllText("Data/provinces.json");
         }
 
         public List<Province> GetProvinces(Position position)

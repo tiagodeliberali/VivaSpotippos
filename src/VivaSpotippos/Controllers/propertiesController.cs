@@ -1,42 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using VivaSpotippos.Model;
+using VivaSpotippos.Model.RestEntities;
+using VivaSpotippos.Model.Validation;
 
 namespace VivaSpotippos.Controllers
 {
     [Route("[controller]")]
     public class PropertiesController : Controller
     {
-        // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]IPropertyData property)
+        public PostResponse Post([FromBody]IPropertyData property)
         {
+            var response = new PostResponse();
 
+            var validation = PropertyValidation.Validate(property);
+
+            if (validation.IsValid)
+            {
+
+            }
+            else
+            {
+                response.Status = "1";
+                response.Message = validation.ErrorMessage;
+            }
+
+            return response;
         }
 
-        // PUT api/values/5
+        private bool IsValid(IPropertyData property)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
         {
         }
     }
