@@ -9,7 +9,7 @@ namespace VivaSpotippos.Test
         public void IsValid()
         {
             // Arrange
-            var property = DemoData.ValidIPropertyData;
+            var property = DemoData.ValidPostRequest;
 
             // Act
             var validation = PropertyValidation.Validate(property);
@@ -39,7 +39,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertyPosition(int x, int y, bool isValid)
         {
             // Arrange
-            var property = DemoData.ValidIPropertyData;
+            var property = DemoData.ValidPostRequest;
             property.x = x;
             property.y = y;
 
@@ -63,7 +63,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertyBedNumber(int value, bool isValid)
         {
             // Arrange
-            var property = DemoData.ValidIPropertyData;
+            var property = DemoData.ValidPostRequest;
             property.beds = value;
 
             // Act
@@ -86,7 +86,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertyBathNumber(int value, bool isValid)
         {
             // Arrange
-            var property = DemoData.ValidIPropertyData;
+            var property = DemoData.ValidPostRequest;
             property.baths = value;
 
             // Act
@@ -109,7 +109,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertySquareMeters(int value, bool isValid)
         {
             // Arrange
-            var property = DemoData.ValidIPropertyData;
+            var property = DemoData.ValidPostRequest;
             property.squareMeters = value;
 
             // Act

@@ -2,7 +2,7 @@
 
 namespace VivaSpotippos.Model
 {
-    public class Property : IPropertyData
+    public class Property
     {
         public int id { get; set; }
         public string title { get; set; }
@@ -15,7 +15,7 @@ namespace VivaSpotippos.Model
         public string[] provinces { get; set; }
         public int squareMeters { get; set; }
 
-        public static Property CreateFrom(IPropertyData data)
+        public static Property CreateFrom(PropertyPostRequest data)
         {
             return new Property()
             {

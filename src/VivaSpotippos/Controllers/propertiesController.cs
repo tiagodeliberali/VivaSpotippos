@@ -29,23 +29,29 @@ namespace VivaSpotippos.Controllers
         }
 
         [HttpPost]
-        public PostResponse Post([FromBody]IPropertyData property)
+        public ObjectResult Post([FromBody]PropertyPostRequest data)
         {
-            var response = new PostResponse();
+            var response = new PropertyPostResponse();
 
-            var validation = PropertyValidation.Validate(property);
+            var validation = PropertyValidation.Validate(data);
 
             if (validation.IsValid)
             {
+                response.Status = "0";
                 response.Message = "Created";
+                response.CreatedProperty = propertyStore.AddProperty(data);
+
+                return Created(
+                    string.Format("http://www.google.com/properties/{0}", response.CreatedProperty.id),
+                    response);
             }
             else
             {
                 response.Status = "1";
                 response.Message = validation.ErrorMessage;
-            }
 
-            return response;
+                return BadRequest(response);
+            }
         }
 
         [HttpPut("{id}")]

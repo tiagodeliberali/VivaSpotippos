@@ -10,7 +10,7 @@ namespace VivaSpotippos.Model.Validation
 
         public bool IsValid { get; private set; }
 
-        public static PropertyValidation Validate(IPropertyData property)
+        public static PropertyValidation Validate(PropertyPostRequest property)
         {
             var message = new StringBuilder();
 
@@ -33,7 +33,7 @@ namespace VivaSpotippos.Model.Validation
             };
         }
 
-        private static bool IsNull(StringBuilder message, IPropertyData property)
+        private static bool IsNull(StringBuilder message, PropertyPostRequest property)
         {
             bool isValid = property != null;
 

@@ -17,7 +17,7 @@ namespace VivaSpotippos.Test
                 .Setup(x => x.GetProvinces(It.IsAny<Position>()))
                 .Returns(new List<Province>() { new Province() { name = DemoData.ProvinceName } });
 
-            var data = DemoData.ValidIPropertyData;
+            var data = DemoData.ValidPostRequest;
 
             var store = new PropertyStoreTestable(provinceStoreMock.Object);
 

@@ -9,7 +9,7 @@ namespace VivaSpotippos.Test
         public void CreatePropertyFromIPropertyData()
         {
             // Arrange
-            var data = DemoData.ValidIPropertyData;
+            var data = DemoData.ValidPostRequest;
 
             // Act
             var property = Property.CreateFrom(data);

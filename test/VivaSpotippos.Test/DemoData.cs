@@ -16,11 +16,11 @@ namespace VivaSpotippos.Test
             }
         }
 
-        public static IPropertyData ValidIPropertyData
+        public static PropertyPostRequest ValidPostRequest
         {
             get
             {
-                return new Property()
+                return new PropertyPostRequest()
                 {
                     beds = 4,
                     baths = 3,

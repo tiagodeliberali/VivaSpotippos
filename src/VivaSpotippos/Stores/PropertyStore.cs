@@ -23,7 +23,7 @@ namespace VivaSpotippos.Stores
             }
         }
 
-        public Property AddProperty(IPropertyData data)
+        public Property AddProperty(PropertyPostRequest data)
         {
             var property = Property.CreateFrom(data);
 
