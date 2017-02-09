@@ -19,9 +19,14 @@ namespace VivaSpotippos.Stores
 
             if (properties == null)
             {
-                properties = new Dictionary<int, Property>();
-                memoryIdentity = 1;
+                ResetPropertyDictionary();
             }
+        }
+
+        protected void ResetPropertyDictionary()
+        {
+            properties = new Dictionary<int, Property>();
+            memoryIdentity = 1;
         }
 
         public Property AddProperty(PropertyPostRequest data)

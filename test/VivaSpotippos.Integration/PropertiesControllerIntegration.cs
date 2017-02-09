@@ -40,7 +40,7 @@ namespace VivaSpotippos.Integration
 
                     Assert.Equal("0", result.Status);
                     Assert.NotNull(result.CreatedProperty);
-                    Assert.Equal(1, result.CreatedProperty.id);
+                    Assert.True(result.CreatedProperty.id > 0);
                 }
             }
         }

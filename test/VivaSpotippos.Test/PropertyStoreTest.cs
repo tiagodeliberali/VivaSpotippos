@@ -14,6 +14,8 @@ namespace VivaSpotippos.Test
             // Arrange
             var store = GetPropertyStore();
 
+            store.ClearPropertyDictionary();
+
             var data = DemoData.ValidPostRequest;
 
             // Act

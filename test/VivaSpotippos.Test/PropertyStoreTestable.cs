@@ -14,5 +14,10 @@ namespace VivaSpotippos.Test
         {
             return PropertyStore.properties;
         }
+
+        public void ClearPropertyDictionary()
+        {
+            ResetPropertyDictionary();
+        }
     }
 }
