@@ -31,7 +31,7 @@ namespace VivaSpotippos.Controllers
 
             if (validation.IsValid)
             {
-
+                response.Message = "Created";
             }
             else
             {
@@ -40,11 +40,6 @@ namespace VivaSpotippos.Controllers
             }
 
             return response;
-        }
-
-        private bool IsValid(IPropertyData property)
-        {
-            throw new NotImplementedException();
         }
 
         [HttpPut("{id}")]

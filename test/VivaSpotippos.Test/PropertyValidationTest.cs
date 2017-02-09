@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using VivaSpotippos.Model;
+﻿using VivaSpotippos.Model;
 using VivaSpotippos.Model.RestEntities;
 using VivaSpotippos.Model.Validation;
 using Xunit;

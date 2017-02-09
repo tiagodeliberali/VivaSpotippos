@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using VivaSpotippos.Model.RestEntities;
 
 namespace VivaSpotippos.Model.Validation
