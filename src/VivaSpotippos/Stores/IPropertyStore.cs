@@ -6,5 +6,6 @@ namespace VivaSpotippos.Stores
     public interface IPropertyStore
     {
         Property AddProperty(PropertyPostRequest data);
+        Property Get(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using VivaSpotippos.Model;
 using VivaSpotippos.Model.RestEntities;
 using VivaSpotippos.Model.Validation;
 using VivaSpotippos.Stores;
@@ -23,9 +24,9 @@ namespace VivaSpotippos.Controllers
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Property Get(int id)
         {
-            return "value";
+            return propertyStore.Get(id);
         }
 
         [HttpPost]

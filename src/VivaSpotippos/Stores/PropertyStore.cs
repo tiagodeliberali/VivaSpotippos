@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VivaSpotippos.Model;
 using VivaSpotippos.Model.Entities;
@@ -37,6 +38,16 @@ namespace VivaSpotippos.Stores
             properties.Add(property.id, property);
 
             return property;
+        }
+
+        public Property Get(int id)
+        {
+            if (properties.ContainsKey(id))
+            {
+                return properties[id];
+            }
+
+            return null;
         }
     }
 }

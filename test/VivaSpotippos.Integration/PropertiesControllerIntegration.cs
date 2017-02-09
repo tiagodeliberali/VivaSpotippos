@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,13 +44,6 @@ namespace VivaSpotippos.Integration
             }
         }
 
-        private static IWebHostBuilder GetWebHostBuilder()
-        {
-            return new WebHostBuilder()
-                            .UseEnvironment("Development")
-                            .UseStartup<Startup>();
-        }
-
         [Fact]
         public async Task PostInvalidProperty()
         {
@@ -84,6 +74,13 @@ namespace VivaSpotippos.Integration
                     Assert.Null(result.CreatedProperty);
                 }
             }
+        }
+
+        private static IWebHostBuilder GetWebHostBuilder()
+        {
+            return new WebHostBuilder()
+                            .UseEnvironment("Development")
+                            .UseStartup<Startup>();
         }
     }
 }
