@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using VivaSpotippos.Model.RestEntities;
 
 namespace VivaSpotippos.Model.Validation
@@ -13,9 +14,9 @@ namespace VivaSpotippos.Model.Validation
         {
             var message = new StringBuilder();
 
-            bool isValid = true;
+            bool isValid = IsNull(message, property); ;
 
-            isValid = IsInRange(message, property.x, 0, 1400, nameof(property.x));
+            isValid = isValid && IsInRange(message, property.x, 0, 1400, nameof(property.x));
 
             isValid = isValid && IsInRange(message, property.y, 0, 1000, nameof(property.y));
 
@@ -32,6 +33,18 @@ namespace VivaSpotippos.Model.Validation
             };
         }
 
+        private static bool IsNull(StringBuilder message, IPropertyData property)
+        {
+            bool isValid = property != null;
+
+            if (!isValid)
+            {
+                message.AppendLine(ErrorMessages.NullIPropertyData);
+            }
+
+            return isValid;
+        }
+
         private static bool IsInRange(StringBuilder message, int value, int startValue, int endValue, string propertyName)
         {
             var isValid = value >= startValue && value <= endValue;
@@ -39,7 +52,7 @@ namespace VivaSpotippos.Model.Validation
             if (!isValid)
             {
                 message.AppendLine(
-                    string.Format("The property '{0}' is outside the specified range of '{1}' and '{2}'", 
+                    string.Format(ErrorMessages.OutOfRange, 
                         propertyName, startValue, endValue));
             }
 

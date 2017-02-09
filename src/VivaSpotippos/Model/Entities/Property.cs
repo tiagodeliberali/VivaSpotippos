@@ -14,5 +14,20 @@ namespace VivaSpotippos.Model
         public int baths { get; set; }
         public string[] provinces { get; set; }
         public int squareMeters { get; set; }
+
+        public static Property CreateFrom(IPropertyData data)
+        {
+            return new Property()
+            {
+                baths = data.baths,
+                beds = data.beds,
+                description = data.description,
+                price = data.price,
+                squareMeters = data.squareMeters,
+                title = data.title,
+                x = data.x,
+                y = data.y
+            };
+        }
     }
 }

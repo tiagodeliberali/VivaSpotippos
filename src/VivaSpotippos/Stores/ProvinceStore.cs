@@ -6,7 +6,7 @@ using VivaSpotippos.Model.Entities;
 
 namespace VivaSpotippos.Stores
 {
-    public class ProvinceStore
+    public class ProvinceStore : IProvinceStore
     {
         private static List<Province> provinces { get; set; }
 

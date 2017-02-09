@@ -1,6 +1,4 @@
-﻿using VivaSpotippos.Model;
-using VivaSpotippos.Model.RestEntities;
-using VivaSpotippos.Model.Validation;
+﻿using VivaSpotippos.Model.Validation;
 using Xunit;
 
 namespace VivaSpotippos.Test
@@ -11,13 +9,24 @@ namespace VivaSpotippos.Test
         public void IsValid()
         {
             // Arrange
-            var property = GetValidProperty();
+            var property = DemoData.ValidIPropertyData;
 
             // Act
             var validation = PropertyValidation.Validate(property);
 
             // Assert
             Assert.True(validation.IsValid);
+        }
+
+        [Fact]
+        public void NullObjectIsNotValid()
+        {
+            // Arrange / Act
+            var validation = PropertyValidation.Validate(null);
+
+            // Assert
+            Assert.False(validation.IsValid);
+            Assert.Contains(ErrorMessages.NullIPropertyData, validation.ErrorMessage);
         }
 
         [Theory]
@@ -30,7 +39,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertyPosition(int x, int y, bool isValid)
         {
             // Arrange
-            var property = GetValidProperty();
+            var property = DemoData.ValidIPropertyData;
             property.x = x;
             property.y = y;
 
@@ -54,7 +63,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertyBedNumber(int value, bool isValid)
         {
             // Arrange
-            var property = GetValidProperty();
+            var property = DemoData.ValidIPropertyData;
             property.beds = value;
 
             // Act
@@ -77,7 +86,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertyBathNumber(int value, bool isValid)
         {
             // Arrange
-            var property = GetValidProperty();
+            var property = DemoData.ValidIPropertyData;
             property.baths = value;
 
             // Act
@@ -100,7 +109,7 @@ namespace VivaSpotippos.Test
         public void ValidatePropertySquareMeters(int value, bool isValid)
         {
             // Arrange
-            var property = GetValidProperty();
+            var property = DemoData.ValidIPropertyData;
             property.squareMeters = value;
 
             // Act
@@ -115,19 +124,6 @@ namespace VivaSpotippos.Test
             }
         }
 
-        private IPropertyData GetValidProperty()
-        {
-            return new Property()
-            {
-                beds = 4,
-                baths = 3,
-                description = "description",
-                price = 1250000,
-                squareMeters = 100,
-                title = "title",
-                x = 222,
-                y = 444
-            };
-        }
+        
     }
 }

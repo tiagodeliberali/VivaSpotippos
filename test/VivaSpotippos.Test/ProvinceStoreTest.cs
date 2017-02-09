@@ -5,7 +5,7 @@ using Xunit;
 
 namespace VivaSpotippos.Test
 {
-    public class ProvinceStoreTests
+    public class ProvinceStoreTest
     {
         [Theory]
         [InlineData(0, 0, "Scavy")]

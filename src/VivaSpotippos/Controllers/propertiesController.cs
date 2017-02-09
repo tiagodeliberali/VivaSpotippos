@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using VivaSpotippos.Model;
 using VivaSpotippos.Model.RestEntities;
 using VivaSpotippos.Model.Validation;
+using VivaSpotippos.Stores;
 
 namespace VivaSpotippos.Controllers
 {
     [Route("[controller]")]
     public class PropertiesController : Controller
     {
+        private IPropertyStore propertyStore;
+
+        public PropertiesController(IPropertyStore propertyStore)
+        {
+            this.propertyStore = propertyStore;
+        }
+
         [HttpGet]
         public IEnumerable<string> Get()
         {
