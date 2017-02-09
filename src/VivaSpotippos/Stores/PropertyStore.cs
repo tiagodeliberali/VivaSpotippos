@@ -54,5 +54,10 @@ namespace VivaSpotippos.Stores
 
             return null;
         }
+
+        public List<Property> Get(Position startPosition, Position endPosition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

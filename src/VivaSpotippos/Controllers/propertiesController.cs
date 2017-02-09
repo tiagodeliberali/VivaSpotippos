@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using VivaSpotippos.Model;
+using VivaSpotippos.Model.Entities;
 using VivaSpotippos.Model.RestEntities;
 using VivaSpotippos.Model.Validation;
 using VivaSpotippos.Stores;
@@ -18,9 +19,18 @@ namespace VivaSpotippos.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public PropertyGetListResponse Get(int ax, int ay, int bx, int by)
         {
-            return new string[] { "value1", "value2" };
+            var startPosition = new Position(ax, ay);
+            var endPosition = new Position(bx, by);
+
+            var properties = propertyStore.Get(startPosition, endPosition);
+
+            return new PropertyGetListResponse()
+            {
+                foundProperties = properties.Count,
+                properties = properties
+            };
         }
 
         [HttpGet("{id}")]
@@ -53,11 +63,6 @@ namespace VivaSpotippos.Controllers
 
                 return BadRequest(response);
             }
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
         }
     }
 }
