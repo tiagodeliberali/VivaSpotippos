@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using VivaSpotippos.Model;
 using VivaSpotippos.Model.Entities;
@@ -46,23 +48,45 @@ namespace VivaSpotippos.Controllers
 
             var validation = PropertyValidation.Validate(data);
 
-            if (validation.IsValid)
+            try
             {
-                response.Status = "0";
-                response.Message = "Created";
-                response.CreatedProperty = propertyStore.AddProperty(data);
+                if (validation.IsValid)
+                {
+                    response.Status = "0";
+                    response.Message = "Created";
+                    response.CreatedProperty = propertyStore.AddProperty(data);
 
-                return Created(
-                    string.Format("http://www.google.com/properties/{0}", response.CreatedProperty.id),
-                    response);
+                    return Created(
+                        string.Format("http://www.google.com/properties/{0}", response.CreatedProperty.id),
+                        response);
+                }
+                else
+                {
+                    response.Status = "1";
+                    response.Message = validation.ErrorMessage;
+
+                    return BadRequest(response);
+                }
             }
-            else
+            catch(PropertyStoreAddException storeEx)
             {
-                response.Status = "1";
-                response.Message = validation.ErrorMessage;
+                response.Status = "2";
+                response.Message = storeEx.Message;
 
                 return BadRequest(response);
             }
+            catch (Exception ex)
+            {
+                response.Status = "3";
+                response.Message = ex.Message;
+
+                return InternalError(response);
+            }
+        }
+
+        private ObjectResult InternalError(object response)
+        {
+            return StatusCode((int)HttpStatusCode.InternalServerError, response);
         }
     }
 }
