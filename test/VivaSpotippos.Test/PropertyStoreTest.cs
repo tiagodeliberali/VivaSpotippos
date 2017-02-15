@@ -91,6 +91,35 @@ namespace VivaSpotippos.Test
             Assert.Equal(createdProperty.id, property.id);
         }
 
+        [Fact]
+        public void GetPropertiesOnMap()
+        {
+            // Arrange
+            var store = GetPropertyStore();
+
+            var data1 = DemoData.ValidPostRequest;
+            data1.x = 10;
+            data1.y = 10;
+
+            var data2 = DemoData.ValidPostRequest;
+            data2.x = 11;
+            data2.y = 11;
+
+            var data3 = DemoData.ValidPostRequest;
+            data3.x = 12;
+            data3.y = 12;
+
+            store.AddProperty(data1);
+            store.AddProperty(data2);
+            store.AddProperty(data3);
+
+            // Act
+            var propertyList = store.Get(new Position(10, 10), new Position(12, 12));
+
+            // Assert
+            Assert.Equal(3, propertyList.Count);
+        }
+
         private static PropertyStoreTestable GetPropertyStore()
         {
             var provinceStoreMock = new Mock<IProvinceStore>();

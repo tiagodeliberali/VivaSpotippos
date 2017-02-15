@@ -78,7 +78,20 @@ namespace VivaSpotippos.Stores
 
         public List<Property> Get(Position startPosition, Position endPosition)
         {
-            throw new NotImplementedException();
+            var foundProperties = new List<Property>();
+
+            for (int xPosition = startPosition.x; xPosition <= endPosition.x; xPosition++)
+            {
+                for (int yPosition = startPosition.y; yPosition <= endPosition.y; yPosition++)
+                {
+                    if (map[xPosition, yPosition] != null)
+                    {
+                        foundProperties.Add(map[xPosition, yPosition]);
+                    }
+                }
+            }
+
+            return foundProperties;
         }
     }
 }
