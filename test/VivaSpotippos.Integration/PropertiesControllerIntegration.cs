@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace VivaSpotippos.Integration
                         .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                     var requestData = DemoData.ValidPostRequest;
+                    requestData.x = 1;
+                    requestData.y = 1;
 
                     var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 

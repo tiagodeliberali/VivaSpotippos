@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Moq;
+using VivaSpotippos.Model;
 using VivaSpotippos.Model.Entities;
 using VivaSpotippos.Stores;
 using Xunit;
@@ -28,6 +29,33 @@ namespace VivaSpotippos.Test
             var storedProperties = store.GetPropertyDictionary();
             Assert.Equal(1, storedProperties.Count);
             Assert.True(storedProperties.ContainsKey(1));
+        }
+
+        /// <summary>
+        /// Given a property registered on the store
+        /// When I try to add a new property to the same position
+        /// Then it should thrown an PropertyStoreAddException
+        /// </summary>
+        [Fact]
+        public void ShouldNotAllowAddPropertiesOnSamePosition()
+        {
+            // Arrange
+            var store = GetPropertyStore();
+
+            store.Clear();
+
+            var data = DemoData.ValidPostRequest;
+
+            store.AddProperty(data);
+
+            // Act
+            var exeption = Record.Exception(() => store.AddProperty(data));
+
+            // Assert
+            string expectedExeption = string.Format(ErrorMessages.PositionAlreadyAllocated, data.x, data.y);
+
+            Assert.Equal(typeof(PropertyStoreAddException), exeption.GetType());
+            Assert.Equal(expectedExeption, exeption.Message);
         }
 
         [Fact]

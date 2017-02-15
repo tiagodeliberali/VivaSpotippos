@@ -12,6 +12,7 @@ namespace VivaSpotippos.Stores
         private IProvinceStore provinceStore;
         private static int memoryIdentity = 1;
         protected static Dictionary<int, Property> properties;
+        protected static Property[,] map;
 
         public PropertyStore(IProvinceStore provinceStore)
         {
@@ -19,18 +20,26 @@ namespace VivaSpotippos.Stores
 
             if (properties == null)
             {
-                ResetPropertyDictionary();
+                ResetPropertyStorage();
             }
         }
 
-        protected void ResetPropertyDictionary()
+        protected void ResetPropertyStorage()
         {
             properties = new Dictionary<int, Property>();
+            map = new Property[VivaSettings.MaxMapX, VivaSettings.MaxMapY];
+
             memoryIdentity = 1;
         }
 
         public Property AddProperty(PropertyPostRequest data)
         {
+            if (!PositionOnMapIsFree(data.x, data.y))
+            {
+                throw new PropertyStoreAddException(
+                    string.Format(ErrorMessages.PositionAlreadyAllocated, data.x, data.y));
+            }
+
             var property = Property.CreateFrom(data);
 
             property.id = memoryIdentity++;
@@ -42,7 +51,19 @@ namespace VivaSpotippos.Stores
 
             properties.Add(property.id, property);
 
+            AddToMap(property);
+
             return property;
+        }
+
+        private static void AddToMap(Property property)
+        {
+            map[property.x, property.y] = property;
+        }
+
+        private bool PositionOnMapIsFree(int x, int y)
+        {
+            return map[x, y] == null;
         }
 
         public Property Get(int id)

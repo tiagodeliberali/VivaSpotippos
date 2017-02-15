@@ -17,7 +17,7 @@ namespace VivaSpotippos.Test
 
         public void Clear()
         {
-            ResetPropertyDictionary();
+            ResetPropertyStorage();
         }
     }
 }
