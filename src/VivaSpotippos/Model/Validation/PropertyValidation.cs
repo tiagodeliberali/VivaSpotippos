@@ -16,15 +16,25 @@ namespace VivaSpotippos.Model.Validation
 
             bool isValid = IsNull(message, property); ;
 
-            isValid = isValid && IsInRange(message, property.x, 0, 1400, nameof(property.x));
+            isValid = isValid 
+                && IsInRange(message, 
+                    property.x, VivaSettings.MinMapX, VivaSettings.MaxMapX, nameof(property.x));
 
-            isValid = isValid && IsInRange(message, property.y, 0, 1000, nameof(property.y));
+            isValid = isValid 
+                && IsInRange(message, 
+                    property.y, VivaSettings.MinMapY, VivaSettings.MaxMapY, nameof(property.y));
 
-            isValid = isValid && IsInRange(message, property.beds, 1, 5, nameof(property.beds));
+            isValid = isValid 
+                && IsInRange(message, 
+                    property.beds, VivaSettings.MinBedsNumber, VivaSettings.MaxBedsNumber, nameof(property.beds));
 
-            isValid = isValid && IsInRange(message, property.baths, 1, 4, nameof(property.baths));
+            isValid = isValid 
+                && IsInRange(message, 
+                    property.baths, VivaSettings.MinBathsNumber, VivaSettings.MaxBathsNumber, nameof(property.baths));
 
-            isValid = isValid && IsInRange(message, property.squareMeters, 20, 240, nameof(property.squareMeters));
+            isValid = isValid 
+                && IsInRange(message, 
+                    property.squareMeters, VivaSettings.MinPropertySize, VivaSettings.MaxPropertySize, nameof(property.squareMeters));
 
             return new PropertyValidation()
             {
