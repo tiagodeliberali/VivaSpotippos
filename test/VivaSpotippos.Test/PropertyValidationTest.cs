@@ -1,4 +1,5 @@
-﻿using VivaSpotippos.Model.Validation;
+﻿using VivaSpotippos.Model;
+using VivaSpotippos.Model.Validation;
 using Xunit;
 
 namespace VivaSpotippos.Test

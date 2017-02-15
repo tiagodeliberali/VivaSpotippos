@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VivaSpotippos.Model.Validation
+namespace VivaSpotippos.Model
 {
     public class ErrorMessages
     {
@@ -17,6 +17,14 @@ namespace VivaSpotippos.Model.Validation
             get
             {
                 return "The property '{0}' is outside the specified range of '{1}' and '{2}'";
+            }
+        }
+
+        public static string PositionAlreadyAllocated
+        {
+            get
+            {
+                return "There is already a property at position '{0}, {1}'. It is not possible to add a new position to the same location.";
             }
         }
     }
