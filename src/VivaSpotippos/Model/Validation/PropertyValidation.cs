@@ -49,7 +49,7 @@ namespace VivaSpotippos.Model.Validation
 
             if (!isValid)
             {
-                message.AppendLine(ErrorMessages.NullIPropertyData);
+                message.AppendLine(SystemMessages.NullIPropertyData);
             }
 
             return isValid;
@@ -62,7 +62,7 @@ namespace VivaSpotippos.Model.Validation
             if (!isValid)
             {
                 message.AppendLine(
-                    string.Format(ErrorMessages.OutOfRange, 
+                    string.Format(SystemMessages.OutOfRange, 
                         propertyName, startValue, endValue));
             }
 

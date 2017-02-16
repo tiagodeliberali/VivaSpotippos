@@ -2,8 +2,16 @@
 
 namespace VivaSpotippos.Model
 {
-    public class ErrorMessages
+    public class SystemMessages
     {
+        public static string Created
+        {
+            get
+            {
+                return "Created";
+            }
+        }
+
         public static string NullIPropertyData
         {
             get

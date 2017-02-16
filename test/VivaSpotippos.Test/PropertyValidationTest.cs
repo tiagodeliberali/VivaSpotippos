@@ -37,7 +37,7 @@ namespace VivaSpotippos.Test
 
             // Assert
             Assert.False(validation.IsValid);
-            Assert.Contains(ErrorMessages.NullIPropertyData, validation.ErrorMessage);
+            Assert.Contains(SystemMessages.NullIPropertyData, validation.ErrorMessage);
         }
 
         /// <summary>

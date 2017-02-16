@@ -38,7 +38,7 @@ namespace VivaSpotippos.Stores
             if (!mapStrategy.PositionOnMapIsFree(data.x, data.y))
             {
                 throw new PropertyStoreAddException(
-                    string.Format(ErrorMessages.PositionAlreadyAllocated, data.x, data.y));
+                    string.Format(SystemMessages.PositionAlreadyAllocated, data.x, data.y));
             }
 
             var property = Property.CreateFrom(data);

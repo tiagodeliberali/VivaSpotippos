@@ -58,7 +58,7 @@ namespace VivaSpotippos.Test
             var exeption = Record.Exception(() => store.AddProperty(data));
 
             // Assert
-            string expectedExeption = string.Format(ErrorMessages.PositionAlreadyAllocated, data.x, data.y);
+            string expectedExeption = string.Format(SystemMessages.PositionAlreadyAllocated, data.x, data.y);
 
             Assert.Equal(typeof(PropertyStoreAddException), exeption.GetType());
             Assert.Equal(expectedExeption, exeption.Message);
