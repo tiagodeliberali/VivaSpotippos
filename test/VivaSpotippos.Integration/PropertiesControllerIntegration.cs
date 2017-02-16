@@ -46,7 +46,7 @@ namespace VivaSpotippos.Integration
                     // Assert
                     Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
-                    Assert.Equal("0", result.Status);
+                    Assert.Equal(ResponseStatus.Success, result.Status);
                     Assert.NotNull(result.CreatedProperty);
                     Assert.True(result.CreatedProperty.id > 0);
                 }
@@ -86,11 +86,11 @@ namespace VivaSpotippos.Integration
                     var result = JsonConvert.DeserializeObject<PropertyPostResponse>(await response.Content.ReadAsStringAsync());
 
                     // Assert
-                    string expectedMessage = string.Format(ErrorMessages.PositionAlreadyAllocated, requestData.x, requestData.y);
+                    string expectedMessage = string.Format(SystemMessages.PositionAlreadyAllocated, requestData.x, requestData.y);
 
                     Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-                    Assert.Equal("2", result.Status);
+                    Assert.Equal(ResponseStatus.PropertyAddException, result.Status);
                     Assert.Equal(expectedMessage, result.Message);
                 }
             }
@@ -126,7 +126,7 @@ namespace VivaSpotippos.Integration
                     // Assert
                     Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-                    Assert.Equal("1", result.Status);
+                    Assert.Equal(ResponseStatus.InvalidProperty, result.Status);
                     Assert.Contains("'beds'", result.Message);
                     Assert.Null(result.CreatedProperty);
                 }

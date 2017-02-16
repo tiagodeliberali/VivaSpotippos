@@ -52,8 +52,8 @@ namespace VivaSpotippos.Controllers
             {
                 if (validation.IsValid)
                 {
-                    response.Status = "0";
-                    response.Message = "Created";
+                    response.Status = ResponseStatus.Success;
+                    response.Message = SystemMessages.Created;
                     response.CreatedProperty = propertyStore.AddProperty(data);
 
                     return Created(
@@ -62,7 +62,7 @@ namespace VivaSpotippos.Controllers
                 }
                 else
                 {
-                    response.Status = "1";
+                    response.Status = ResponseStatus.InvalidProperty;
                     response.Message = validation.ErrorMessage;
 
                     return BadRequest(response);
@@ -70,14 +70,14 @@ namespace VivaSpotippos.Controllers
             }
             catch(PropertyStoreAddException storeEx)
             {
-                response.Status = "2";
+                response.Status = ResponseStatus.PropertyAddException;
                 response.Message = storeEx.Message;
 
                 return BadRequest(response);
             }
             catch (Exception ex)
             {
-                response.Status = "3";
+                response.Status = ResponseStatus.GeneralException;
                 response.Message = ex.Message;
 
                 return InternalError(response);
