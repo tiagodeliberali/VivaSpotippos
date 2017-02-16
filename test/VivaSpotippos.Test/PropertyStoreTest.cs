@@ -10,6 +10,11 @@ namespace VivaSpotippos.Test
 {
     public class PropertyStoreTest
     {
+        /// <summary>
+        /// Given a property post request
+        /// When adds it to the property store
+        /// Then it should create a property from it, adding id and provinces realted to its position
+        /// </summary>
         [Fact]
         public void AddPropertyShouldIncludeIdAndProvinces()
         {
@@ -59,6 +64,11 @@ namespace VivaSpotippos.Test
             Assert.Equal(expectedExeption, exeption.Message);
         }
 
+        /// <summary>
+        /// Given a invalid property id
+        /// When gets property by the invalid id
+        /// Then it should return null
+        /// </summary>
         [Fact]
         public void GetPropertyNotRegistered()
         {
@@ -74,6 +84,11 @@ namespace VivaSpotippos.Test
             Assert.Null(property);
         }
 
+        /// <summary>
+        /// Given a property id
+        /// When gets property by the id
+        /// Then it should return the related property
+        /// </summary>
         [Fact]
         public void GetPropertyRegistered()
         {
@@ -92,6 +107,11 @@ namespace VivaSpotippos.Test
             Assert.Equal(createdProperty.id, property.id);
         }
 
+        /// <summary>
+        /// Given a set of stored properties
+        /// When gets properties by position
+        /// Then it should return all properties inside the selected area
+        /// </summary>
         [Fact]
         public void GetPropertiesOnMap()
         {

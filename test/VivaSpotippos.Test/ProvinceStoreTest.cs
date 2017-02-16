@@ -7,6 +7,11 @@ namespace VivaSpotippos.Test
 {
     public class ProvinceStoreTest
     {
+        /// <summary>
+        /// Given a position without sobreposition of provinces
+        /// When gets provinces based on the position
+        /// Then it should return the correct province
+        /// </summary>
         [Theory]
         [InlineData(0, 0, "Scavy")]
         [InlineData(100, 600, "Gode")]
@@ -31,6 +36,11 @@ namespace VivaSpotippos.Test
             Assert.Equal(province, foundProvince.First().name);
         }
 
+        /// <summary>
+        /// Given a position with sobreposition of provinces
+        /// When gets provinces based on the position
+        /// Then it should return the correct province list
+        /// </summary>
         [Theory]
         [InlineData(500, 700, "Gode", "Ruja")]
         [InlineData(400, 700, "Gode", "Ruja")]

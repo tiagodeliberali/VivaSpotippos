@@ -6,6 +6,11 @@ namespace VivaSpotippos.Test
 {
     public class PropertyValidationTest
     {
+        /// <summary>
+        /// Given a valid property
+        /// When validates it
+        /// Then it should return true
+        /// </summary>
         [Fact]
         public void IsValid()
         {
@@ -19,6 +24,11 @@ namespace VivaSpotippos.Test
             Assert.True(validation.IsValid);
         }
 
+        /// <summary>
+        /// Given a null instance of property
+        /// When validates it
+        /// Then it should return false and a message about the null data
+        /// </summary>
         [Fact]
         public void NullObjectIsNotValid()
         {
@@ -30,6 +40,11 @@ namespace VivaSpotippos.Test
             Assert.Contains(ErrorMessages.NullIPropertyData, validation.ErrorMessage);
         }
 
+        /// <summary>
+        /// Given a valid property set to a position
+        /// When validates it
+        /// Then it should return false and a message about the error if outside maps ranges. Otherwise, should return true.
+        /// </summary>
         [Theory]
         [InlineData(0, 0, true)]
         [InlineData(700, 700, true)]
@@ -56,6 +71,11 @@ namespace VivaSpotippos.Test
             }
         }
 
+        /// <summary>
+        /// Given a valid property with a specified number fo beds
+        /// When validates it
+        /// Then it should return false and a message about the error if outside beds number range. Otherwise, should return true.
+        /// </summary>
         [Theory]
         [InlineData(0, false)]
         [InlineData(1, true)]
@@ -79,6 +99,11 @@ namespace VivaSpotippos.Test
             }
         }
 
+        /// <summary>
+        /// Given a valid property with a specified number fo baths
+        /// When validates it
+        /// Then it should return false and a message about the error if outside baths number range. Otherwise, should return true.
+        /// </summary>
         [Theory]
         [InlineData(0, false)]
         [InlineData(1, true)]
@@ -102,6 +127,11 @@ namespace VivaSpotippos.Test
             }
         }
 
+        /// <summary>
+        /// Given a valid property with a specified square meters
+        /// When validates it
+        /// Then it should return false and a message about the error if outside square meters range. Otherwise, should return true.
+        /// </summary>
         [Theory]
         [InlineData(19, false)]
         [InlineData(20, true)]

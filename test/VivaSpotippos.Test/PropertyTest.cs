@@ -5,6 +5,11 @@ namespace VivaSpotippos.Test
 {
     public class PropertyTest
     {
+        /// <summary>
+        /// Given a property post request instance
+        /// When builds a property from it
+        /// Then the property should contais all property post request data
+        /// </summary>
         [Fact]
         public void CreatePropertyFromIPropertyData()
         {
