@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using VivaSpotippos.Model;
 using VivaSpotippos.Model.Entities;
+using VivaSpotippos.Model.Mapping;
 using VivaSpotippos.Model.RestEntities;
 
 namespace VivaSpotippos.Stores
@@ -11,12 +11,13 @@ namespace VivaSpotippos.Stores
     {
         private IProvinceStore provinceStore;
         private static int memoryIdentity = 1;
+        private IMapStrategy mapStrategy;
         protected static Dictionary<int, Property> properties;
-        protected static Property[,] map;
-
-        public PropertyStore(IProvinceStore provinceStore)
+        
+        public PropertyStore(IProvinceStore provinceStore, IMapStrategy mapStrategy)
         {
             this.provinceStore = provinceStore;
+            this.mapStrategy = mapStrategy;
 
             if (properties == null)
             {
@@ -27,14 +28,14 @@ namespace VivaSpotippos.Stores
         protected void ResetPropertyStorage()
         {
             properties = new Dictionary<int, Property>();
-            map = new Property[VivaSettings.MaxMapX, VivaSettings.MaxMapY];
+            mapStrategy.ResetMap();
 
             memoryIdentity = 1;
         }
 
         public Property AddProperty(PropertyPostRequest data)
         {
-            if (!PositionOnMapIsFree(data.x, data.y))
+            if (!mapStrategy.PositionOnMapIsFree(data.x, data.y))
             {
                 throw new PropertyStoreAddException(
                     string.Format(ErrorMessages.PositionAlreadyAllocated, data.x, data.y));
@@ -51,19 +52,9 @@ namespace VivaSpotippos.Stores
 
             properties.Add(property.id, property);
 
-            AddToMap(property);
+            mapStrategy.AddToMap(property);
 
             return property;
-        }
-
-        private static void AddToMap(Property property)
-        {
-            map[property.x, property.y] = property;
-        }
-
-        private bool PositionOnMapIsFree(int x, int y)
-        {
-            return map[x, y] == null;
         }
 
         public Property Get(int id)
@@ -78,20 +69,7 @@ namespace VivaSpotippos.Stores
 
         public List<Property> Get(Position startPosition, Position endPosition)
         {
-            var foundProperties = new List<Property>();
-
-            for (int xPosition = startPosition.x; xPosition <= endPosition.x; xPosition++)
-            {
-                for (int yPosition = startPosition.y; yPosition <= endPosition.y; yPosition++)
-                {
-                    if (map[xPosition, yPosition] != null)
-                    {
-                        foundProperties.Add(map[xPosition, yPosition]);
-                    }
-                }
-            }
-
-            return foundProperties;
+            return mapStrategy.GetOnMap(startPosition, endPosition);
         }
     }
 }

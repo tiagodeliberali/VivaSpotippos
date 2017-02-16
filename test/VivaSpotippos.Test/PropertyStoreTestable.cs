@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using VivaSpotippos.Model;
+using VivaSpotippos.Model.Mapping;
 using VivaSpotippos.Stores;
 
 namespace VivaSpotippos.Test
 {
     public class PropertyStoreTestable : PropertyStore
     {
-        public PropertyStoreTestable(IProvinceStore provinceStore) : base(provinceStore)
+        public PropertyStoreTestable(IProvinceStore provinceStore, IMapStrategy mapStrategy) : base(provinceStore, mapStrategy)
         {
         }
 

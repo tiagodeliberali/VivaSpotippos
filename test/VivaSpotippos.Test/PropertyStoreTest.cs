@@ -2,6 +2,7 @@
 using Moq;
 using VivaSpotippos.Model;
 using VivaSpotippos.Model.Entities;
+using VivaSpotippos.Model.Mapping;
 using VivaSpotippos.Stores;
 using Xunit;
 
@@ -97,6 +98,17 @@ namespace VivaSpotippos.Test
             // Arrange
             var store = GetPropertyStore();
 
+            LoadDemoData(store);
+
+            // Act
+            var propertyList = store.Get(new Position(10, 10), new Position(12, 12));
+
+            // Assert
+            Assert.Equal(3, propertyList.Count);
+        }
+
+        private static void LoadDemoData(PropertyStoreTestable store)
+        {
             var data1 = DemoData.ValidPostRequest;
             data1.x = 10;
             data1.y = 10;
@@ -109,15 +121,19 @@ namespace VivaSpotippos.Test
             data3.x = 12;
             data3.y = 12;
 
+            var data4 = DemoData.ValidPostRequest;
+            data4.x = 13;
+            data4.y = 13;
+
+            var data5 = DemoData.ValidPostRequest;
+            data5.x = 14;
+            data5.y = 14;
+
             store.AddProperty(data1);
             store.AddProperty(data2);
             store.AddProperty(data3);
-
-            // Act
-            var propertyList = store.Get(new Position(10, 10), new Position(12, 12));
-
-            // Assert
-            Assert.Equal(3, propertyList.Count);
+            store.AddProperty(data4);
+            store.AddProperty(data5);
         }
 
         private static PropertyStoreTestable GetPropertyStore()
@@ -127,7 +143,7 @@ namespace VivaSpotippos.Test
                 .Setup(x => x.GetProvinces(It.IsAny<Position>()))
                 .Returns(new List<Province>() { new Province() { name = DemoData.ProvinceName } });
 
-            var store = new PropertyStoreTestable(provinceStoreMock.Object);
+            var store = new PropertyStoreTestable(provinceStoreMock.Object, new ArrayMapStrategy());
             return store;
         }
     }
