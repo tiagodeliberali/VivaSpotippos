@@ -1,0 +1,18 @@
+Test (ms): ArrayMapStrategy - LowDensityDistribution - Fator de redução:1
+Avg: 9.49000
+Dsv: 0.82320
+Test (ms): ArrayMapStrategy - LowDensityDistribution - Fator de redução:2
+Avg: 2.07000
+Dsv: 0.13020
+Test (ms): ArrayMapStrategy - LowDensityDistribution - Fator de redução:10
+Avg: 0.00000
+Dsv: 0.00000
+Test (ms): ArrayMapStrategy - HighDensityDistribution - Fator de redução:1
+Avg: 28.64000
+Dsv: 7.74880
+Test (ms): ArrayMapStrategy - HighDensityDistribution - Fator de redução:2
+Avg: 7.87000
+Dsv: 3.70240
+Test (ms): ArrayMapStrategy - HighDensityDistribution - Fator de redução:10
+Avg: 0.01000
+Dsv: 0.01980
