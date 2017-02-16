@@ -15,6 +15,11 @@ namespace VivaSpotippos.Integration
 {
     public class PropertiesControllerIntegration
     {
+        /// <summary>
+        /// Given a new property
+        /// When post it to properties api rest
+        /// Then it should return a successful response
+        /// </summary>
         [Fact]
         public async Task PostSuccessful()
         {
@@ -48,6 +53,54 @@ namespace VivaSpotippos.Integration
             }
         }
 
+        /// <summary>
+        /// Given a new property with position already used before
+        /// When post it to properties api rest
+        /// Then it should return a error response with details about position usage
+        /// </summary>
+        [Fact]
+        public async Task PostPropertyOnAlreadyUsedPosition()
+        {
+            // Arrange
+            using (var host = new TestServer(GetWebHostBuilder()))
+            {
+                using (var client = host.CreateClient())
+                {
+                    client.DefaultRequestHeaders
+                        .Accept
+                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var requestData = DemoData.ValidPostRequest;
+                    requestData.x = 1;
+                    requestData.y = 1;
+
+                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+
+                    await client.PostAsync("properties", content);
+
+                    // Act
+                    content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync("properties", content);
+
+                    var result = JsonConvert.DeserializeObject<PropertyPostResponse>(await response.Content.ReadAsStringAsync());
+
+                    // Assert
+                    string expectedMessage = string.Format(ErrorMessages.PositionAlreadyAllocated, requestData.x, requestData.y);
+
+                    Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+                    Assert.Equal("2", result.Status);
+                    Assert.Equal(expectedMessage, result.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Given a new property with invalid number of beds
+        /// When post it to properties api rest
+        /// Then it should return a error response with information about the failure
+        /// </summary>
         [Fact]
         public async Task PostInvalidProperty()
         {
@@ -80,6 +133,11 @@ namespace VivaSpotippos.Integration
             }
         }
 
+        /// <summary>
+        /// Given a property id
+        /// When get it from properties api rest
+        /// Then it should return the property with id and provinces information
+        /// </summary>
         [Fact]
         public async Task GetSuccessful()
         {
@@ -109,6 +167,11 @@ namespace VivaSpotippos.Integration
             }
         }
 
+        /// <summary>
+        /// Given an invalid property id
+        /// When post it to properties api rest
+        /// Then it should return null with No Content (204) http status code
+        /// </summary>
         [Fact]
         public async Task GetInvalidId()
         {
