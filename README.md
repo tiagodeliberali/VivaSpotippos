@@ -1,2 +1,2 @@
 # VivaSpotippos
-Just for fun, checking thre viva real challenge
+Just for fun, checking the viva real challenge
