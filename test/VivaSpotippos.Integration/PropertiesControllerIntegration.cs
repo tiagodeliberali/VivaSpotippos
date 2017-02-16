@@ -4,9 +4,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using VivaSpotippos.Model;
+using VivaSpotippos.Model.Mapping;
 using VivaSpotippos.Model.RestEntities;
+using VivaSpotippos.Stores;
 using VivaSpotippos.Test;
 using Xunit;
 
@@ -123,14 +126,15 @@ namespace VivaSpotippos.Integration
         public async Task GetSuccessful()
         {
             // Arrange
-            using (var host = new TestServer(GetWebHostBuilder()))
+            var propertyStore = new PropertyStoreTestable(new ProvinceStore(), new ArrayMapStrategy());
+            var addedProperty = propertyStore.AddProperty(DemoData.ValidPostRequest);
+
+            using (var host = new TestServer(GetWebHostBuilder(propertyStore)))
             {
                 using (var client = CreateClient(host))
                 {
-                    PropertyPostResponse propertyResult = await CreateProperty(client);
-
                     // Act
-                    var response = await client.GetAsync(string.Format("properties/{0}", propertyResult.CreatedProperty.id));
+                    var response = await client.GetAsync(string.Format("properties/{0}", addedProperty.id));
 
                     var result = JsonConvert.DeserializeObject<Property>(await response.Content.ReadAsStringAsync());
 
@@ -138,7 +142,7 @@ namespace VivaSpotippos.Integration
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
                     Assert.NotNull(result);
-                    Assert.Equal(propertyResult.CreatedProperty.id, result.id);
+                    Assert.Equal(addedProperty.id, result.id);
                     Assert.Contains("Scavy", result.provinces);
                 }
             }
@@ -172,6 +176,40 @@ namespace VivaSpotippos.Integration
             }
         }
 
+        /// <summary>
+        /// Given a set of properties stored
+        /// When get based on area from properties api rest
+        /// Then it should return the properties inside the supplied area
+        /// </summary>
+        [Fact]
+        public async Task GetSuccessfulByArea()
+        {
+            // Arrange
+            var propertyStore = new PropertyStoreTestable(new ProvinceStore(), new ArrayMapStrategy());
+
+            DemoData.LoadDemoData(propertyStore);
+
+            using (var host = new TestServer(GetWebHostBuilder(propertyStore)))
+            {
+                using (var client = CreateClient(host))
+                {
+                    // Act
+                    var response = await client.GetAsync(
+                        string.Format("properties?ax={0}&ay={1}&bx={2}&by={3}", 10, 10, 12, 12));
+
+                    var result = JsonConvert.DeserializeObject<PropertyGetListResponse>(await response.Content.ReadAsStringAsync());
+
+                    // Assert
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                    Assert.NotNull(result);
+                    Assert.Equal(3, result.foundProperties);
+                    Assert.NotNull(result.properties);
+                    Assert.Equal(3, result.properties.Count);
+                }
+            }
+        }
+
         private static HttpClient CreateClient(TestServer host)
         {
             var client = host.CreateClient();
@@ -188,24 +226,18 @@ namespace VivaSpotippos.Integration
             return new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, mediaTypeJson);
         }
 
-        private static async Task<PropertyPostResponse> CreateProperty(HttpClient client)
+        private static IWebHostBuilder GetWebHostBuilder(PropertyStoreTestable propertyStore = null)
         {
-            var requestData = DemoData.ValidPostRequest;
-
-            var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, mediaTypeJson);
-
-            var response = await client.PostAsync("properties", content);
-
-            var result = JsonConvert.DeserializeObject<PropertyPostResponse>(await response.Content.ReadAsStringAsync());
-
-            return result;
-        }
-
-        private static IWebHostBuilder GetWebHostBuilder()
-        {
-            return new WebHostBuilder()
+            var webHost = new WebHostBuilder()
                             .UseEnvironment("Development")
                             .UseStartup<Startup>();
+
+            if (propertyStore != null)
+            {
+                webHost.ConfigureServices(services => services.AddScoped<IPropertyStore>(serviceProvider => propertyStore));
+            }
+
+            return webHost;
         }
     }
 }
