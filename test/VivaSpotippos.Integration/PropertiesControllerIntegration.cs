@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +14,8 @@ namespace VivaSpotippos.Integration
 {
     public class PropertiesControllerIntegration
     {
+        private const string mediaTypeJson = "application/json";
+
         /// <summary>
         /// Given a new property
         /// When post it to properties api rest
@@ -26,20 +27,14 @@ namespace VivaSpotippos.Integration
             // Arrange
             using (var host = new TestServer(GetWebHostBuilder()))
             {
-                using (var client = host.CreateClient())
+                using (var client = CreateClient(host))
                 {
-                    client.DefaultRequestHeaders
-                        .Accept
-                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                     var requestData = DemoData.ValidPostRequest;
                     requestData.x = 1;
                     requestData.y = 1;
 
-                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
-
                     // Act
-                    var response = await client.PostAsync("properties", content);
+                    var response = await client.PostAsync("properties", CreateContent(requestData));
 
                     var result = JsonConvert.DeserializeObject<PropertyPostResponse>(await response.Content.ReadAsStringAsync());
 
@@ -64,24 +59,16 @@ namespace VivaSpotippos.Integration
             // Arrange
             using (var host = new TestServer(GetWebHostBuilder()))
             {
-                using (var client = host.CreateClient())
+                using (var client = CreateClient(host))
                 {
-                    client.DefaultRequestHeaders
-                        .Accept
-                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                     var requestData = DemoData.ValidPostRequest;
                     requestData.x = 1;
                     requestData.y = 1;
 
-                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
-
-                    await client.PostAsync("properties", content);
+                    await client.PostAsync("properties", CreateContent(requestData));
 
                     // Act
-                    content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
-
-                    var response = await client.PostAsync("properties", content);
+                    var response = await client.PostAsync("properties", CreateContent(requestData));
 
                     var result = JsonConvert.DeserializeObject<PropertyPostResponse>(await response.Content.ReadAsStringAsync());
 
@@ -107,19 +94,13 @@ namespace VivaSpotippos.Integration
             // Arrange
             using (var host = new TestServer(GetWebHostBuilder()))
             {
-                using (var client = host.CreateClient())
+                using (var client = CreateClient(host))
                 {
-                    client.DefaultRequestHeaders
-                        .Accept
-                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                     var requestData = DemoData.ValidPostRequest;
                     requestData.beds = 100;
 
-                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
-
                     // Act
-                    var response = await client.PostAsync("properties", content);
+                    var response = await client.PostAsync("properties", CreateContent(requestData));
 
                     var result = JsonConvert.DeserializeObject<PropertyPostResponse>(await response.Content.ReadAsStringAsync());
 
@@ -144,12 +125,8 @@ namespace VivaSpotippos.Integration
             // Arrange
             using (var host = new TestServer(GetWebHostBuilder()))
             {
-                using (var client = host.CreateClient())
+                using (var client = CreateClient(host))
                 {
-                    client.DefaultRequestHeaders
-                        .Accept
-                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                     PropertyPostResponse propertyResult = await CreateProperty(client);
 
                     // Act
@@ -178,12 +155,8 @@ namespace VivaSpotippos.Integration
             // Arrange
             using (var host = new TestServer(GetWebHostBuilder()))
             {
-                using (var client = host.CreateClient())
+                using (var client = CreateClient(host))
                 {
-                    client.DefaultRequestHeaders
-                        .Accept
-                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                     int invalidId = 123;
 
                     // Act
@@ -199,11 +172,27 @@ namespace VivaSpotippos.Integration
             }
         }
 
+        private static HttpClient CreateClient(TestServer host)
+        {
+            var client = host.CreateClient();
+
+            client.DefaultRequestHeaders
+                        .Accept
+                        .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(mediaTypeJson));
+
+            return client;
+        }
+
+        private static StringContent CreateContent(object content)
+        {
+            return new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, mediaTypeJson);
+        }
+
         private static async Task<PropertyPostResponse> CreateProperty(HttpClient client)
         {
             var requestData = DemoData.ValidPostRequest;
 
-            var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, mediaTypeJson);
 
             var response = await client.PostAsync("properties", content);
 
