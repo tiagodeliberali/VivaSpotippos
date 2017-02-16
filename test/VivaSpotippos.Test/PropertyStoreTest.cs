@@ -29,8 +29,8 @@ namespace VivaSpotippos.Test
             var createdProperty = store.AddProperty(data);
 
             // Assert
-            Assert.Equal(1, createdProperty.id);
-            Assert.Contains(DemoData.ProvinceName, createdProperty.provinces);
+            Assert.Equal(1, createdProperty.Id);
+            Assert.Contains(DemoData.ProvinceName, createdProperty.Provinces);
 
             var storedProperties = store.GetPropertyDictionary();
             Assert.Equal(1, storedProperties.Count);
@@ -100,11 +100,11 @@ namespace VivaSpotippos.Test
             var createdProperty = store.AddProperty(data);
 
             // Act
-            var property = store.Get(createdProperty.id);
+            var property = store.Get(createdProperty.Id);
 
             // Assert
             Assert.NotNull(property);
-            Assert.Equal(createdProperty.id, property.id);
+            Assert.Equal(createdProperty.Id, property.Id);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace VivaSpotippos.Test
             var provinceStoreMock = new Mock<IProvinceStore>();
             provinceStoreMock
                 .Setup(x => x.GetProvinces(It.IsAny<Position>()))
-                .Returns(new List<Province>() { new Province() { name = DemoData.ProvinceName } });
+                .Returns(new List<Province>() { new Province() { Name = DemoData.ProvinceName } });
 
             var store = new PropertyStoreTestable(provinceStoreMock.Object, new ArrayMapStrategy());
             return store;

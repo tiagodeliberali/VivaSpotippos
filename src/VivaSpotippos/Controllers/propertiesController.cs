@@ -57,7 +57,7 @@ namespace VivaSpotippos.Controllers
                     response.CreatedProperty = propertyStore.AddProperty(data);
 
                     return Created(
-                        string.Format("http://www.google.com/properties/{0}", response.CreatedProperty.id),
+                        string.Format("http://www.google.com/properties/{0}", response.CreatedProperty.Id),
                         response);
                 }
                 else

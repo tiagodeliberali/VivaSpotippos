@@ -29,7 +29,7 @@ namespace VivaSpotippos.Stores
             foreach (var item in provincesJObject.Properties())
             {
                 var newProvince = item.Value.ToObject<Province>();
-                newProvince.name = item.Name;
+                newProvince.Name = item.Name;
 
                 provinces.Add(newProvince);
             }
@@ -47,8 +47,8 @@ namespace VivaSpotippos.Stores
         public List<Province> GetProvinces(Position position)
         {
             return provinces
-                .Where(x => x.boundaries.upperLeft.x <= position.x && x.boundaries.bottomRight.x >= position.x
-                        && x.boundaries.upperLeft.y >= position.y && x.boundaries.bottomRight.y <= position.y)
+                .Where(x => x.Boundaries.UpperLeft.X <= position.X && x.Boundaries.BottomRight.X >= position.X
+                        && x.Boundaries.UpperLeft.Y >= position.Y && x.Boundaries.BottomRight.Y <= position.Y)
                 .ToList();
         }
     }

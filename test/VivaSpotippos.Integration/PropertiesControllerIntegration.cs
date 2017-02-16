@@ -46,7 +46,7 @@ namespace VivaSpotippos.Integration
 
                     Assert.Equal(ResponseStatus.Success, result.Status);
                     Assert.NotNull(result.CreatedProperty);
-                    Assert.True(result.CreatedProperty.id > 0);
+                    Assert.True(result.CreatedProperty.Id > 0);
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace VivaSpotippos.Integration
                 using (var client = CreateClient(host))
                 {
                     // Act
-                    var response = await client.GetAsync(string.Format("properties/{0}", addedProperty.id));
+                    var response = await client.GetAsync(string.Format("properties/{0}", addedProperty.Id));
 
                     var result = JsonConvert.DeserializeObject<Property>(await response.Content.ReadAsStringAsync());
 
@@ -142,8 +142,8 @@ namespace VivaSpotippos.Integration
                     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
                     Assert.NotNull(result);
-                    Assert.Equal(addedProperty.id, result.id);
-                    Assert.Contains("Scavy", result.provinces);
+                    Assert.Equal(addedProperty.Id, result.Id);
+                    Assert.Contains("Scavy", result.Provinces);
                 }
             }
         }
@@ -196,6 +196,8 @@ namespace VivaSpotippos.Integration
                     // Act
                     var response = await client.GetAsync(
                         string.Format("properties?ax={0}&ay={1}&bx={2}&by={3}", 10, 10, 12, 12));
+
+                    var content = await response.Content.ReadAsStringAsync();
 
                     var result = JsonConvert.DeserializeObject<PropertyGetListResponse>(await response.Content.ReadAsStringAsync());
 

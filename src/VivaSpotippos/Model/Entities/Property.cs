@@ -4,29 +4,29 @@ namespace VivaSpotippos.Model
 {
     public class Property
     {
-        public int id { get; set; }
-        public string title { get; set; }
-        public int price { get; set; }
-        public string description { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public int beds { get; set; }
-        public int baths { get; set; }
-        public string[] provinces { get; set; }
-        public int squareMeters { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public int Price { get; set; }
+        public string Description { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Beds { get; set; }
+        public int Baths { get; set; }
+        public string[] Provinces { get; set; }
+        public int SquareMeters { get; set; }
 
         public static Property CreateFrom(PropertyPostRequest data)
         {
             return new Property()
             {
-                baths = data.baths,
-                beds = data.beds,
-                description = data.description,
-                price = data.price,
-                squareMeters = data.squareMeters,
-                title = data.title,
-                x = data.x,
-                y = data.y
+                Baths = data.baths,
+                Beds = data.beds,
+                Description = data.description,
+                Price = data.price,
+                SquareMeters = data.squareMeters,
+                Title = data.title,
+                X = data.x,
+                Y = data.y
             };
         }
     }

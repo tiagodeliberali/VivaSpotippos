@@ -14,9 +14,9 @@ namespace VivaSpotippos.Model.Mapping
         {
             var foundProperties = new List<Property>();
 
-            for (int xPosition = startPosition.x; xPosition <= endPosition.x; xPosition++)
+            for (int xPosition = startPosition.X; xPosition <= endPosition.X; xPosition++)
             {
-                for (int yPosition = startPosition.y; yPosition <= endPosition.y; yPosition++)
+                for (int yPosition = startPosition.Y; yPosition <= endPosition.Y; yPosition++)
                 {
                     if (map[xPosition, yPosition] != null)
                     {
@@ -30,7 +30,7 @@ namespace VivaSpotippos.Model.Mapping
 
         public void AddToMap(Property property)
         {
-            map[property.x, property.y] = property;
+            map[property.X, property.Y] = property;
         }
 
         public bool PositionOnMapIsFree(int x, int y)

@@ -2,7 +2,7 @@
 {
     public class Province
     {
-        public string name { get; set; }
-        public Boundaries boundaries { get; set; }
+        public string Name { get; set; }
+        public Boundaries Boundaries { get; set; }
     }
 }

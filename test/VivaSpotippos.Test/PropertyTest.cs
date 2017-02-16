@@ -20,14 +20,14 @@ namespace VivaSpotippos.Test
             var property = Property.CreateFrom(data);
 
             // Assert
-            Assert.Equal(data.baths, property.baths);
-            Assert.Equal(data.beds, property.beds);
-            Assert.Equal(data.description, property.description);
-            Assert.Equal(data.price, property.price);
-            Assert.Equal(data.squareMeters, property.squareMeters);
-            Assert.Equal(data.title, property.title);
-            Assert.Equal(data.x, property.x);
-            Assert.Equal(data.y, property.y);
+            Assert.Equal(data.baths, property.Baths);
+            Assert.Equal(data.beds, property.Beds);
+            Assert.Equal(data.description, property.Description);
+            Assert.Equal(data.price, property.Price);
+            Assert.Equal(data.squareMeters, property.SquareMeters);
+            Assert.Equal(data.title, property.Title);
+            Assert.Equal(data.x, property.X);
+            Assert.Equal(data.y, property.Y);
         }
     }
 }

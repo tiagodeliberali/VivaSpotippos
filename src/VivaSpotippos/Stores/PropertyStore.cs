@@ -43,14 +43,14 @@ namespace VivaSpotippos.Stores
 
             var property = Property.CreateFrom(data);
 
-            property.id = memoryIdentity++;
+            property.Id = memoryIdentity++;
 
-            property.provinces = provinceStore
+            property.Provinces = provinceStore
                 .GetProvinces(new Position(data.x, data.y))
-                .Select(x => x.name)
+                .Select(x => x.Name)
                 .ToArray();
 
-            properties.Add(property.id, property);
+            properties.Add(property.Id, property);
 
             mapStrategy.AddToMap(property);
 

@@ -33,7 +33,7 @@ namespace VivaSpotippos.Test
             Assert.NotNull(foundProvince);
             Assert.Equal(1, foundProvince.Count);
 
-            Assert.Equal(province, foundProvince.First().name);
+            Assert.Equal(province, foundProvince.First().Name);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace VivaSpotippos.Test
             Assert.NotNull(foundProvince);
             Assert.Equal(provinces.Count(), foundProvince.Count);
 
-            var listOfProvinceNames = foundProvince.Select(p => p.name);
+            var listOfProvinceNames = foundProvince.Select(p => p.Name);
 
             foreach (var item in provinces)
             {
